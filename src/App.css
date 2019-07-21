@@ -31,3 +31,39 @@
     transform: rotate(360deg);
   }
 }
+
+#custom-header {
+  height: 100px;
+  vertical-align: middle;
+}
+
+#header-text {
+  margin: auto 0;
+}
+
+.centered {
+ text-align: center;
+ width: 30%;
+ margin: auto 0 auto auto;
+}
+
+#login-box {
+  height: 100%;
+  width: 10%;
+  border-width: 1px;
+}
+#login-box a{
+  width: 100%;
+  height: 100%;
+  border: #282c34;
+  vertical-align: text-bottom;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.center-content  {
+  max-width: 400px !important;
+  max-height: 800px !important;
+  clear: both;
+}
+
