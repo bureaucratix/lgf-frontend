@@ -57,7 +57,7 @@ getProfile = () => {
   
   render(){
     return (
-      <div className="App">
+      <div >
       <Router>
         <div className="ui green" id="custom-header">
           <Topbar isLoggedIn={this.state.isLoggedIn} logout={this.logout}/>

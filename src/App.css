@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: rgb(6, 59, 6);
 }
 
 .App-logo {
@@ -33,12 +34,20 @@
 }
 
 #custom-header {
+  
   height: 100px;
   vertical-align: middle;
+  background-image: url("./images/leaf-bg.jpg");
+  text-shadow: 0 0 4px #000000;
+  color: white;
+
+}
+#secondary-header{
+  background-color: rgb(33, 146, 33);
 }
 
 #header-text {
-  margin: auto 0;
+  margin: auto 0 auto 10%;
 }
 
 .centered {
@@ -62,8 +71,30 @@
 }
 
 .center-content  {
-  max-width: 400px !important;
-  max-height: 800px !important;
+  width: 500px !important;
+  height: 700px !important;
   clear: both;
 }
 
+.float-left{
+  float: left;
+}
+.float-right{
+  float: right;
+}
+
+.card-image{
+  max-height: 450px;
+  width: auto;
+}
+
+.padding{
+ padding-left: 10%;
+ padding-right: 10%;
+}
+
+.toxicity-info{
+  font-size: 15px;
+  color:black;
+  font-weight: bold;
+}
