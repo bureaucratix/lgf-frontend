@@ -29,32 +29,10 @@ class PlantContainer extends Component {
     //     })
     // }
 
-    daysUntilWater = (plant) =>{
-   
-        let waterInt = plant.water_interval
-        if (plant.last_watered_time === null) {return waterInt}
-        let displaySplit = plant.last_watered_time.split(" ").slice(1, 4)
-        let lastWater = new Date(displaySplit)
-        
-        
     
-        var oneDay = 24*60*60*1000;
-        var todayDate = new Date()
-        let lastWaterMilli = lastWater.getTime()-25200000
-        let todayMilli = todayDate.getTime()
-        // console.log("last watered date", this.props.plant.last_watered_time)
-        // console.log("Today's date", todayDate)
-        var daysSinceLast = Math.round((lastWaterMilli - todayMilli)/(oneDay)-1);
-       
-        return waterInt-daysSinceLast
-        
-      }
 
       
-    sortByDaysLeft = (plantsArr) => {
-        let sortedArray = plantsArr.sort((a, b) => this.daysUntilWater(a) - this.daysUntilWater(b));
-        return sortedArray
-    }
+   
 
     handleOnClick = (plant) => {
         this.setState({editPlant:plant, redirect: true});
@@ -70,8 +48,8 @@ class PlantContainer extends Component {
         return (
             
             <Card.Group itemsPerRow={2}>
-                {this.sortByDaysLeft(this.props.plants).map(plant=>{
-                    return <Plantcard daysUntilWater={this.daysUntilWater} getProfile={this.props.getProfile} waterPlant={this.props.waterPlant} removePlant={this.props.removePlant} reload={this.props.reload} setEditPlant={this.props.setEditPlant} plant={plant}/>
+                {(this.props.plants).map(plant=>{
+                    return <Plantcard getToken={this.props.getToken} daysUntilWater={this.props.daysUntilWater} getProfile={this.props.getProfile} waterPlant={this.props.waterPlant} removePlant={this.props.removePlant} setEditPlant={this.props.setEditPlant} plant={plant}/>
                 })}
             </Card.Group>
             

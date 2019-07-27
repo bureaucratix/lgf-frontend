@@ -94,13 +94,13 @@ class ModalModalExample extends React.Component {
         console.log("submitting", this.state)
         ev.preventDefault()
     
-        // let token = this.getToken()
+        let token = this.props.getToken()
         fetch(`${API_ROOT}/species`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                // 'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify({species: species}),
         })

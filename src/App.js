@@ -14,36 +14,98 @@ class App extends Component {
     this.username = React.createRef()
     this.password = React.createRef()
 
-    if (this.getToken()) {
-        this.getProfile()
-    }
-
     this.state = {
-        username: '',
+        plants:[],
+        user: null,
         isLoggedIn: false,
-        currentPageHeader: "Main Page"
     }
 
-    this.logout = this.logout.bind(this)
-} 
-  
-getToken() {
-  return localStorage.getItem('jwt')
-} 
+ 
 
-getProfile = () => {
-  let token = this.getToken()
-  fetch(`${API_ROOT}/profile`, {
-      headers: {
-          'Authorization': 'Bearer ' + token
-      }
-  })
-      .then(res => res.json())
-      .then(json => {
-          console.log('profile:', json)
-          this.setState({ user: json.user, isLoggedIn:true })
-      })
+    this.addPlant = this.addPlant.bind(this);
+    this.removePlant = this.removePlant.bind(this);
+
+    // this.logout = this.props.logout.bind(this)
+  } 
+
+  addPlant = (p) => {
+    this.setState(prevState => {
+     
+      const newPlantList = prevState.plants.slice();
+      newPlantList.push(p)
+      return {plants: newPlantList}
+
+        // plants: [...prevState.plants, p.plant ]
+     
+    })
 }
+
+removePlant = (plant) => {
+  console.log("target to remove", plant)
+  console.log("old state", this.state)
+    this.setState(prevState=>{
+      const newPlantList = prevState.plants.slice();
+      // const filteredPlantList = newPlantList.filter(function(p) { return p !== plant})
+      const filteredPlantList= newPlantList.filter(currentPlant=> currentPlant.id !==plant.id)
+      console.log("filtered list", filteredPlantList)
+      return {plants: filteredPlantList}
+    }, ()=>  console.log("this.state1", this.state))
+    console.log("new state", this.state)
+
+}
+
+componentDidMount() {
+  if (this.getToken()) {
+    this.getProfile()
+  } else {
+    this.setState({
+        isLoaded: true
+    })
+}
+}
+
+
+  getToken = () => {
+    return localStorage.getItem('jwt')
+  } 
+
+  getProfile = () => {
+    let token = this.getToken()
+    fetch(`${API_ROOT}/profile`, {headers: {'Authorization': 'Bearer ' + token}}
+    )
+        .then(res => res.json())
+        .then(json => {
+            console.log('profile:', json.user.plants)
+            this.setState({ isLoaded: true, plants: json.user.plants, user: json.user, isLoggedIn:true })
+        })
+  }
+
+  sortByDaysLeft = (plantsArr) => {
+    let sortedArray = plantsArr.sort((a, b) => this.daysUntilWater(a) - this.daysUntilWater(b));
+    return sortedArray
+}
+
+daysUntilWater = (plant) =>{
+   
+  let waterInt = plant.water_interval
+  if (plant.last_watered_time === null) {return waterInt}
+  let displaySplit = plant.last_watered_time.split(" ").slice(1, 4)
+  let lastWater = new Date(displaySplit)
+  
+  
+
+  var oneDay = 24*60*60*1000;
+  var todayDate = new Date()
+  let lastWaterMilli = lastWater.getTime()-25200000
+  let todayMilli = todayDate.getTime()
+  // console.log("last watered date", this.props.plant.last_watered_time)
+  // console.log("Today's date", todayDate)
+  var daysSinceLast = Math.round((lastWaterMilli - todayMilli)/(oneDay)-1);
+ 
+  return waterInt-daysSinceLast
+  
+}
+
 
   logout = () => {
     localStorage.setItem('jwt', '')
@@ -60,9 +122,9 @@ getProfile = () => {
       <div >
       <Router>
         <div className="ui green" id="custom-header">
-          <Topbar isLoggedIn={this.state.isLoggedIn} logout={this.logout}/>
+          <Topbar getToken={this.getToken} logout={this.logout}/>
         </div>
-          <MainContainer logout={this.logout}/>
+          <MainContainer getToken={this.getToken} addPlant={this.addPlant} daysUntilWater={this.daysUntilWater} removePlant={this.removePlant} getProfile={this.getProfile} user={this.state.user} isLoggedIn={this.state.isLoggedIn} plants={this.sortByDaysLeft(this.state.plants)} />
           </Router>
       </div>
    

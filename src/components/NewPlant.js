@@ -24,13 +24,13 @@ class NewPlant extends Component {
     }
 
     getSpeciesList = () => {
-                // let token = this.getToken()
+                let token = this.props.getToken()
         fetch(`${API_ROOT}/species`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                // 'Authorization': 'Bearer ' + token
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
             }
             
         })
@@ -63,13 +63,13 @@ class NewPlant extends Component {
         if (this.state.selectedSpecies===null){
             alert("Please select a species for your plant-- You can choose custom to forego suggested details, or add a new species to help our list grow!")
         } else {
-        // let token = this.getToken()
+        let token = this.props.getToken()
         fetch(`${API_ROOT}/plants`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                // 'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify({
                 plant: {
@@ -217,7 +217,7 @@ class NewPlant extends Component {
             </Form>
             <br/>
             <div className="ui align-left">
-                <NewSpeciesModal addNewSpecies={this.addNewSpecies}/>
+                <NewSpeciesModal getToken={this.props.getToken} addNewSpecies={this.addNewSpecies}/>
             </div>
           
 

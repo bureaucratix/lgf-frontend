@@ -14,19 +14,8 @@ class ModalModalExample extends React.Component {
     constructor() {
         super()
         this.state = {
-            plant: null,
-
             modalOpen: false
         }
-
-    }
-
-
-    
-    componentDidMount() {
-        this.setState({
-            plant:this.props.plant
-        })
 
     }
 
@@ -34,6 +23,8 @@ class ModalModalExample extends React.Component {
         return localStorage.getItem('jwt')
     }
 
+
+    
     handleNameChange = (ev, { value }) => {
         console.log(value)
         this.setState((prevState) => ({
@@ -76,20 +67,19 @@ class ModalModalExample extends React.Component {
     
     handleUpdate = (ev) => {
         ev.preventDefault()
-        
-        let plant = this.state.plant
+        let plant = this.props.plant
         this.handlePlantUpdate(ev, plant)
     }
 
     handlePlantUpdate = (ev, plant) => {
         ev.preventDefault()
-            // let token = this.getToken()
+            let token = this.props.getToken()
         fetch(`${API_ROOT}/plants/${plant.id}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                // 'Authorization': 'Bearer ' + token
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify({plant: plant}),
         })
@@ -97,7 +87,6 @@ class ModalModalExample extends React.Component {
             .then(json => {
                 console.log(json)
                 this.handleClose()
-                this.props.getProfile()
             }
             )
     }
@@ -105,14 +94,14 @@ class ModalModalExample extends React.Component {
     deletePlant = (ev) => {
         ev.preventDefault()
         
-        let plant = this.state.plant
-        // let token = this.getToken()
+        let plant = this.props.plant
+        let token = this.props.getToken()
         fetch(`${API_ROOT}/plants/${plant.id}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                // 'Authorization': 'Bearer ' + token
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
             },
         })
             .then(res => res.json() )
@@ -132,28 +121,28 @@ class ModalModalExample extends React.Component {
                 open={this.state.modalOpen}
                 onClose={this.handleClose}
             >
-                <Modal.Header>Edit {this.state.plant?this.state.plant.name:null}</Modal.Header>
+                <Modal.Header>Edit {this.props.plant?this.props.plant.name:null}</Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
                         <Header>Edit Name</Header>
                             <Input  
                                 onChange={this.handleNameChange}
-                                placeholder={this.state.plant?this.state.plant.name:null}
+                                placeholder={this.props.plant?this.props.plant.name:null}
                             />
                         <Header>Edit Description</Header>
                             <Input  
                                 onChange={this.handleDescriptionChange}
-                                placeholder={this.state.plant?this.state.plant.description:null}
+                                placeholder={this.props.plant?this.props.plant.description:null}
                             />
                             <Header>Change Image URL</Header>
                             <Input  
                                 onChange={this.handleimg_urlChange}
-                                placeholder={this.state.plant?this.state.plant.img_url:null}
+                                placeholder={this.props.plant?this.props.plant.img_url:null}
                             />
                             <Header>Edit Watering Interval (In Days)</Header>
                             <Input  
                                 onChange={this.handleWaterIntervalChange}
-                                placeholder={this.state.plant?this.state.plant.water_interval:null}
+                                placeholder={this.props.plant?this.props.plant.water_interval:null}
                             />
                         <Header>Water Amount</Header>
                         <Dropdown 

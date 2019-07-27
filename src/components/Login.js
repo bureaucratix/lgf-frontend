@@ -64,42 +64,26 @@ login = (ev) => {
                 // let userInfo =  JSON.parse(atob(base64));
                 // console.log(userInfo)
                 this.saveToken(json.jwt)
-                this.getProfile()
-                this.forceUpdate();
+                this.props.getProfile()
+                this.setState({isLoggedIn:true})
             } else {
                 alert(json.message)
             }
         })
 }
 
-getProfile = () => {
-    let token = this.getToken()
-    fetch(`${API_ROOT}/profile`, {
-        headers: {
-            'Authorization': 'Bearer ' + token
-        }
-    })
-        .then(res => res.json())
-        .then(json => {
-            console.log('profile:', json)
-            this.setState({ user: json.user, isLoggedIn: true })
-        })
-}
 
-
-
-saveToken(jwt) {
+saveToken = (jwt) => {
     localStorage.setItem('jwt', jwt)
 }
 
 
+render(){
+    if(this.state.isLoggedIn){
+        return <Redirect to="/" />}
 
-getToken(jwt) {
-    return localStorage.getItem('jwt')
-}
-
-  render(){
   return(
+      
   <Segment placeholder>
     <Grid columns={2} relaxed='very' stackable>
       <Grid.Column>
@@ -148,11 +132,11 @@ getToken(jwt) {
                         <div className="fields">
                             <div className="field">
                                 <label>Email</label>
-                                <input type="text" placeholder="email" id="email"/>
+                                <input type="text" placeholder="email" id="emailSignup"/>
                             </div>
                             <div className="field">
                                 <label>Password</label>
-                                <input type="password" placeholder="password" id="password" />
+                                <input type="password" placeholder="password" id="passwordSignup" />
                             </div>
                         </div>
                     </div>
