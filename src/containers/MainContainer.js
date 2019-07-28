@@ -13,7 +13,6 @@ import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
 class MainContainer extends Component {
 
 
-    //-----Things that were in Login.js, maybe want them here to pass info to Header to display name and logout option-----
     constructor() {
         super()
 
@@ -21,21 +20,55 @@ class MainContainer extends Component {
             editPlant:null,
         }
 
-        // this.logout = this.props.logout.bind(this)
+        this.setEditPlant = this.setEditPlant.bind(this)
     } 
 
     setEditPlant(plant) {
-        this.setState({            
-            isLoaded: false
-        })
-        setInterval(
+        
         this.setState({
             editPlant: plant,
             isLoaded: true
+        }, ()=>console.log("setting edit plant:", this.state))
+      
+    }
+
+    editPlantChange = (plant, attribute, value) => {
+        if (this.state.editPlant.id === plant.id ){
+                this.setState((prevState) => ({
+                    editPlant:{
+                    ...prevState.editPlant, [attribute]: value}
+                }))
+                console.log(this.state)
+            } else {
+                console.log("plant/editplant id mismatch on change")
+            }
+        }
+
+    editPlantSubmit = (ev, plant) => {
+        if (this.state.editPlant.id === plant.id ){ 
+            ev.preventDefault()
+            let token = this.props.getToken()
+        fetch(`${API_ROOT}/plants/${plant.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({plant: this.state.editPlant   }),
         })
-        .then(console.log(this.state))
-        , 1000)
-        console.log(this.state)
+            .then(res => res.json() )
+            .then(json => {
+                console.log(json)
+                this.props.getProfile()   
+
+            }
+            )
+        } else {
+            console.log("plant/editplant id mismatch on submit")
+
+        }
+
     }
    
   
@@ -69,9 +102,7 @@ class MainContainer extends Component {
         //     return <Login loginreload={this.reload}/>
         // }
 
-        if(this.props.isLoggedIn===false) {
-            return (<div>not logged in</div>)
-        }
+        
 
         return (
             
@@ -81,7 +112,7 @@ class MainContainer extends Component {
                     <CustomHeader content={this.state.currentPage} logout={this.logout} user={this.props.user?this.props.user:null}/>
                     </div>
 
-                    <Route exact path='/' render={() => <PlantContainer daysUntilWater={this.props.daysUntilWater} getToken={this.props.getToken} getProfile={this.props.getProfile} waterPlant={this.waterPlant} removePlant={this.props.removePlant} setEditPlant={this.setEditPlant} plants={this.props.plants} isLoggedIn={this.props.isLoggedIn} user={this.props.user}/>}/ >
+                    <Route exact path='/' render={() => <PlantContainer editPlantSubmit={this.editPlantSubmit} editPlantChange={this.editPlantChange} daysUntilWater={this.props.daysUntilWater} getToken={this.props.getToken} getProfile={this.props.getProfile} waterPlant={this.waterPlant} removePlant={this.props.removePlant} setEditPlant={this.setEditPlant} plants={this.props.plants} isLoggedIn={this.props.isLoggedIn} user={this.props.user}/>}/ >
                     <Route path='/add' render={() => <NewPlant getToken={this.props.getToken} addPlant={this.props.addPlant} isLoggedIn={this.props.isLoggedIn} user={this.props.user} />} />
                     <Route path='/login' render={() => <Login getToken={this.props.getToken} getProfile={this.props.getProfile} loginreload={this.reload}/>} />
                 </main>

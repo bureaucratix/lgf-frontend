@@ -49,7 +49,7 @@ class PlantContainer extends Component {
             
             <Card.Group itemsPerRow={2}>
                 {(this.props.plants).map(plant=>{
-                    return <Plantcard getToken={this.props.getToken} daysUntilWater={this.props.daysUntilWater} getProfile={this.props.getProfile} waterPlant={this.props.waterPlant} removePlant={this.props.removePlant} setEditPlant={this.props.setEditPlant} plant={plant}/>
+                    return <Plantcard editPlantSubmit={this.props.editPlantSubmit} editPlantChange={this.props.editPlantChange} getToken={this.props.getToken} daysUntilWater={this.props.daysUntilWater} getProfile={this.props.getProfile} waterPlant={this.props.waterPlant} removePlant={this.props.removePlant} setEditPlant={this.props.setEditPlant} plant={plant}/>
                 })}
             </Card.Group>
             

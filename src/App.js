@@ -18,10 +18,11 @@ class App extends Component {
         plants:[],
         user: null,
         isLoggedIn: false,
+        editPlant:null
     }
 
  
-
+    // this.setEditPlant = this.setEditPlant.bind(this);
     this.addPlant = this.addPlant.bind(this);
     this.removePlant = this.removePlant.bind(this);
 

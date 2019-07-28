@@ -53,7 +53,9 @@ class NewPlant extends Component {
     }
 
     componentDidMount(){
-        this.getSpeciesList()
+
+        if(this.props.isLoggedIn === true){
+        this.getSpeciesList()}
     }
 
     handleSubmit = (ev) => {
@@ -158,9 +160,9 @@ class NewPlant extends Component {
     }
     //{https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants}
     render (){
-        if(this.props.loggedIn === false){
+        if(!this.props.isLoggedIn){
             return <Redirect to="/login" />}
-        if(this.state.submitted === true){
+        if(this.state.submitted){
                 return <Redirect to='/' />}
         
         return (

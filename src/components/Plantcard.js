@@ -69,7 +69,7 @@ class Plantcard extends Component {
       
       <Card className="center-content">
       <Card.Content>
-          <Card.Header>{this.props.plant.name} <EditPlantModal getToken={this.props.getToken} getProfile={this.props.getProfile}
+          <Card.Header>{this.props.plant.name} <EditPlantModal setEditPlant={this.props.setEditPlant} editPlantSubmit={this.props.editPlantSubmit} editPlantChange={this.props.editPlantChange} getToken={this.props.getToken} getProfile={this.props.getProfile}
            removePlant={this.props.removePlant} plant={this.props.plant}/></Card.Header>
           <Card.Meta>
               <span className='subheader'>{this.props.plant.species}</span>

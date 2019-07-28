@@ -12,32 +12,54 @@ class  Login extends Component {
 
     this.state = {
       username: '',
-      isLoggedIn: false
+      name: '',
+      email: '',
+      password: '',
   }
 }
         
-  handleSubmit = (event) => {
-    event.preventDefault();
-    let username = event.target[0].value
-    let name = event.target[1].value
-    let email = event.target[2].value
-    let password = event.target[3].value
-    fetch(`${API_ROOT}/users`, {
+handleChange = (e, { name, value }) => {
+    this.setState({ [name]: value })
+    console.log(this.state)}
+
+
+  handleSignUp = (ev) => {
+    console.log(ev)
+    ev.preventDefault()
+    let username = this.state.username
+    let name = this.state.name
+    let email = this.state.email
+    let password = this.state.password
+    console.log("password:", password)
+    let payload =  {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'
-    },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
+            user:{
             username: username,
             name: name,
             password: password,
-            email: email
+            email: email}
         })
-
     }
-    ).then(
-        setTimeout(() => {
-            this.login()
-        }, 1000))
+    console.log("payload body:", payload.body)
+
+    fetch(`${API_ROOT}/users`, payload)
+        .then(res => res.json())
+        .then(json => {
+            if (json && json.jwt) {
+                console.log("after create json:",json)
+                // let base64Url = json.jwt.split('.')[1];
+                // let base64 = base64Url.replace('-', '+').replace('_', '/');
+                // let userInfo =  JSON.parse(atob(base64));
+                // console.log(userInfo)
+                // this.saveToken(json.jwt)
+                this.props.getProfile()
+                // this.setState({isLoggedIn:true})
+            } else {
+                console.log("failed",json)
+            }
+        })
 }
 
 
@@ -110,44 +132,29 @@ render(){
       </Grid.Column>
 
       <Grid.Column verticalAlign='middle'>
-  
-   
-        {this.state.isLoggedIn === true?
-             <Redirect to="/" />:
-            <div className="">
-                <form onSubmit={this.handleSignUp}>
-                    <div className="ui form">
-                        <div className="fields">
+            <div >
+                <Form onSubmit={this.handleSignUp}>
+                    <Form.Group>
                             <div className="field">
-                                <label>Username</label>
-                                <input type="text" placeholder="username" id="usernameSignup" />
+
+                                <Form.Input label='Username' placeholder='Username' name='username' value={this.state.username} onChange={this.handleChange} />
                             </div>
                             <div className="field">
-                                <label>Name</label>
-                                <input type="text" placeholder="name" id="nameSignup"/>
+                            <Form.Input label='name' placeholder='Name' name='name' value={this.state.name} onChange={this.handleChange} />
                             </div>
-                        </div>
-                    </div>
-                    <div className="ui form">
-                        <div className="fields">
+                    </Form.Group>
+                    <Form.Group>
                             <div className="field">
-                                <label>Email</label>
-                                <input type="text" placeholder="email" id="emailSignup"/>
+                            <Form.Input label='E-mail Address' placeholder='Email' name='email' value={this.state.email} onChange={this.handleChange} />
                             </div>
                             <div className="field">
-                                <label>Password</label>
-                                <input type="password" placeholder="password" id="passwordSignup" />
+                            <Form.Input type='password' label='Password' placeholder='Password' name='password' value={this.state.password} onChange={this.handleChange} />
                             </div>
-                        </div>
-                    </div>
-                    {/* <input  type="text" placeholder="username" id="username" />
-                    <input type="text" placeholder="name"  id='name'/>
-                    <input type="text" placeholder="email" id ="email"/>
-                    <input type="password" placeholder="password"  id="password"/> */}
+                    </Form.Group>
+                    
                     <input className="ui secondary button" type="submit" value="Sign Up" />
-                </form>
+                </Form>
             </div>
-        }
         
       </Grid.Column>
     </Grid>
