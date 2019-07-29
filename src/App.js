@@ -111,6 +111,7 @@ daysUntilWater = (plant) =>{
     localStorage.setItem('jwt', '')
     this.setState({
         username: '',
+        plants:[],
         isLoggedIn: false
     })
 }
@@ -118,12 +119,15 @@ daysUntilWater = (plant) =>{
   // <Header as='h2' textAlign='center' content={this.state.currentPageHeader}/>
   
   render(){
+    
     return (
       <div >
+        
       <Router>
         <div className="ui green" id="custom-header">
           <Topbar isLoggedIn={this.state.isLoggedIn} getToken={this.getToken} logout={this.logout}/>
         </div>
+        <div id="amazon-root"></div>
           <MainContainer getToken={this.getToken} addPlant={this.addPlant} daysUntilWater={this.daysUntilWater} removePlant={this.removePlant} getProfile={this.getProfile} user={this.state.user} isLoggedIn={this.state.isLoggedIn} plants={this.sortByDaysLeft(this.state.plants)} />
           </Router>
       </div>

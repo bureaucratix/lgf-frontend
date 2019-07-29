@@ -95,11 +95,18 @@ login = (ev) => {
         })
 }
 
+//  handleAmazonClick = () => {
+//     let options = { scope : 'profile' };
+//     amazon.Login.authorize(options,
+//         'https://zealous-leakey-0ceb57.netlify.com');
+//     return false;
+//     };
+
+
 
 saveToken = (jwt) => {
     localStorage.setItem('jwt', jwt)
 }
-
 
 render(){
     if(this.state.isLoggedIn){
@@ -107,7 +114,7 @@ render(){
 
   return(
       
-  <Segment placeholder>
+  <Segment placeholder> 
     <Grid columns={2} relaxed='very' stackable>
       <Grid.Column>
         <form onSubmit={this.login}>
