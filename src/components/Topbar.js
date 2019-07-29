@@ -12,9 +12,20 @@ export default class Topbar extends Component {
                 <h1 id='header-text'>Little Green Friends</h1>
                 <div className="ui item right menu" id="login-box">
 
+                    { this.props.isLoggedIn? 
                     
-                       <Button> <Link to="/login"> <h2>Login</h2> </Link> 
-                       </Button>
+                    <Button onClick={this.props.logout} > 
+                        <Link to="/login"> <h2>Logout</h2> </Link> 
+                    </Button>
+                
+                    :
+
+                    <Button > 
+                        <Link to="/login"> <h2>Login</h2> </Link> 
+                    </Button>
+
+                    }
+                       
                                     
                     
                 </div>

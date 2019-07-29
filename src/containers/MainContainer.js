@@ -109,7 +109,7 @@ class MainContainer extends Component {
             <div className="App">
                 <main>
                     <div className="ui segment" id="secondary-header">
-                    <CustomHeader content={this.state.currentPage} logout={this.logout} user={this.props.user?this.props.user:null}/>
+                    <CustomHeader isLoggedIn={this.props.isLoggedIn} content={this.state.currentPage} logout={this.logout} user={this.props.user?this.props.user:null}/>
                     </div>
 
                     <Route exact path='/' render={() => <PlantContainer editPlantSubmit={this.editPlantSubmit} editPlantChange={this.editPlantChange} daysUntilWater={this.props.daysUntilWater} getToken={this.props.getToken} getProfile={this.props.getProfile} waterPlant={this.waterPlant} removePlant={this.props.removePlant} setEditPlant={this.setEditPlant} plants={this.props.plants} isLoggedIn={this.props.isLoggedIn} user={this.props.user}/>}/ >

@@ -101,9 +101,8 @@ daysUntilWater = (plant) =>{
   let todayMilli = todayDate.getTime()
   // console.log("last watered date", this.props.plant.last_watered_time)
   // console.log("Today's date", todayDate)
-  var daysSinceLast = Math.round((lastWaterMilli - todayMilli)/(oneDay)-1);
- 
-  return waterInt-daysSinceLast
+  var daysSinceLast = Math.round((todayMilli - lastWaterMilli)/(oneDay));
+  return waterInt-daysSinceLast+1
   
 }
 
@@ -123,7 +122,7 @@ daysUntilWater = (plant) =>{
       <div >
       <Router>
         <div className="ui green" id="custom-header">
-          <Topbar getToken={this.getToken} logout={this.logout}/>
+          <Topbar isLoggedIn={this.state.isLoggedIn} getToken={this.getToken} logout={this.logout}/>
         </div>
           <MainContainer getToken={this.getToken} addPlant={this.addPlant} daysUntilWater={this.daysUntilWater} removePlant={this.removePlant} getProfile={this.getProfile} user={this.state.user} isLoggedIn={this.state.isLoggedIn} plants={this.sortByDaysLeft(this.state.plants)} />
           </Router>

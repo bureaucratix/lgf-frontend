@@ -3,6 +3,7 @@ import { Card, Icon, Image } from 'semantic-ui-react'
 import Plantcard from '../components/Plantcard'
 import {Redirect} from 'react-router-dom'
 import { API_ROOT } from '../constants/index';
+import noplants from '../images/noplants.png'
 
 
 
@@ -46,13 +47,19 @@ class PlantContainer extends Component {
             return <Redirect to="/login" />}
        
         return (
-            
-            <Card.Group itemsPerRow={2}>
+            <>
+            {this.props.plants.length > 0 ?   
+                <Card.Group itemsPerRow={2}>
                 {(this.props.plants).map(plant=>{
-                    return <Plantcard editPlantSubmit={this.props.editPlantSubmit} editPlantChange={this.props.editPlantChange} getToken={this.props.getToken} daysUntilWater={this.props.daysUntilWater} getProfile={this.props.getProfile} waterPlant={this.props.waterPlant} removePlant={this.props.removePlant} setEditPlant={this.props.setEditPlant} plant={plant}/>
+                    return <Plantcard key={plant.id} editPlantSubmit={this.props.editPlantSubmit} editPlantChange={this.props.editPlantChange} getToken={this.props.getToken} daysUntilWater={this.props.daysUntilWater} getProfile={this.props.getProfile} waterPlant={this.props.waterPlant} removePlant={this.props.removePlant} setEditPlant={this.props.setEditPlant} plant={plant}/>
                 })}
-            </Card.Group>
-            
+                </Card.Group>
+            :
+                <div>
+                <img src={noplants} alt="No plants here"/>
+                </div>
+            }
+            </>
         )
     }
 

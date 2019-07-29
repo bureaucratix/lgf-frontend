@@ -23,7 +23,7 @@ handleChange = (e, { name, value }) => {
     console.log(this.state)}
 
 
-  handleSignUp = (ev) => {
+handleSignUp = (ev) => {
     console.log(ev)
     ev.preventDefault()
     let username = this.state.username
@@ -49,13 +49,14 @@ handleChange = (e, { name, value }) => {
         .then(json => {
             if (json && json.jwt) {
                 console.log("after create json:",json)
+                document.getElementById("signupForm").reset();
                 // let base64Url = json.jwt.split('.')[1];
                 // let base64 = base64Url.replace('-', '+').replace('_', '/');
                 // let userInfo =  JSON.parse(atob(base64));
                 // console.log(userInfo)
                 // this.saveToken(json.jwt)
-                this.props.getProfile()
                 // this.setState({isLoggedIn:true})
+                
             } else {
                 console.log("failed",json)
             }
@@ -133,7 +134,7 @@ render(){
 
       <Grid.Column verticalAlign='middle'>
             <div >
-                <Form onSubmit={this.handleSignUp}>
+                <Form id={'signupForm'} onSubmit={this.handleSignUp}>
                     <Form.Group>
                             <div className="field">
 
