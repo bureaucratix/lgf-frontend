@@ -154,6 +154,7 @@ render(){
                     <Form.Group>
                             <div className="field">
                             <Form.Input label='E-mail Address' placeholder='Email' name='email' value={this.state.email} onChange={this.handleChange} />
+                            Must match Amazon e-mail to use Alexa app
                             </div>
                             <div className="field">
                             <Form.Input type='password' label='Password' placeholder='Password' name='password' value={this.state.password} onChange={this.handleChange} />
