@@ -4,8 +4,6 @@ import {Redirect} from 'react-router-dom'
 
 class Main extends Component {
 
-
-
     render (){
 
         if(this.props.loggedIn === false){

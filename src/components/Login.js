@@ -50,12 +50,6 @@ handleSignUp = (ev) => {
             if (json && json.jwt) {
                 console.log("after create json:",json)
                 document.getElementById("signupForm").reset();
-                // let base64Url = json.jwt.split('.')[1];
-                // let base64 = base64Url.replace('-', '+').replace('_', '/');
-                // let userInfo =  JSON.parse(atob(base64));
-                // console.log(userInfo)
-                // this.saveToken(json.jwt)
-                // this.setState({isLoggedIn:true})
                 
             } else {
                 console.log("failed",json)
@@ -82,10 +76,7 @@ login = (ev) => {
         .then(json => {
             console.log('login:', json)
             if (json && json.jwt) {
-                // let base64Url = json.jwt.split('.')[1];
-                // let base64 = base64Url.replace('-', '+').replace('_', '/');
-                // let userInfo =  JSON.parse(atob(base64));
-                // console.log(userInfo)
+               
                 this.saveToken(json.jwt)
                 this.props.getProfile()
                 this.setState({isLoggedIn:true})
@@ -94,14 +85,6 @@ login = (ev) => {
             }
         })
 }
-
-//  handleAmazonClick = () => {
-//     let options = { scope : 'profile' };
-//     amazon.Login.authorize(options,
-//         'https://zealous-leakey-0ceb57.netlify.com');
-//     return false;
-//     };
-
 
 
 saveToken = (jwt) => {
@@ -154,7 +137,6 @@ render(){
                     <Form.Group>
                             <div className="field">
                             <Form.Input label='E-mail Address' placeholder='Email' name='email' value={this.state.email} onChange={this.handleChange} />
-                            Must match Amazon e-mail to use Alexa app
                             </div>
                             <div className="field">
                             <Form.Input type='password' label='Password' placeholder='Password' name='password' value={this.state.password} onChange={this.handleChange} />

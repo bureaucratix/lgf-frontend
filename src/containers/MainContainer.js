@@ -98,12 +98,7 @@ class MainContainer extends Component {
     
 
 
-    render() {
-        // if (!this.state.isLoggedIn){
-        //     return <Login loginreload={this.reload}/>
-        // }
-
-        
+    render() {  
 
         return (
             

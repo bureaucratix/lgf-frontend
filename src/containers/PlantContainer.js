@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import { Card, Icon, Image } from 'semantic-ui-react'
 import Plantcard from '../components/Plantcard'
 import {Redirect} from 'react-router-dom'
-import { API_ROOT } from '../constants/index';
 import noplants from '../images/noplants.png'
 
 
@@ -16,32 +15,13 @@ class PlantContainer extends Component {
             redirect: false
         }
 
-    }
-
-    // componentDidMount(){
-    //     this.setState({
-    //         plants: this.props.plants
-    //     })
-    // }
-
-    // componentWillReceiveProps(){
-    //     this.setState({
-    //         plants: this.props.plants
-    //     })
-    // }
-
-    
-
-      
+    } 
    
-
     handleOnClick = (plant) => {
         this.setState({editPlant:plant, redirect: true});
     }
 
     render(){
-
-       
 
         if(this.props.loggedIn === false){
             return <Redirect to="/login" />}

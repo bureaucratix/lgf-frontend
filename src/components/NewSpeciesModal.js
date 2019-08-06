@@ -23,9 +23,6 @@ class ModalModalExample extends React.Component {
             },
             modalOpen: false
         }
-
-
-
     }
 
 
