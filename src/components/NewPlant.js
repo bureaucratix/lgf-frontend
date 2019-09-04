@@ -158,7 +158,7 @@ class NewPlant extends Component {
             newimg_url: data.value
         })
     }
-    //{https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants}
+
     render (){
         if(!this.props.isLoggedIn){
             return <Redirect to="/login" />}

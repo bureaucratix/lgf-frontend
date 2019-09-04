@@ -98,12 +98,7 @@ class MainContainer extends Component {
     
 
 
-    render() {
-        // if (!this.state.isLoggedIn){
-        //     return <Login loginreload={this.reload}/>
-        // }
-
-        
+    render() {  
 
         return (
             
@@ -115,7 +110,7 @@ class MainContainer extends Component {
 
                     <Route exact path='/' render={() => <PlantContainer editPlantSubmit={this.editPlantSubmit} editPlantChange={this.editPlantChange} daysUntilWater={this.props.daysUntilWater} getToken={this.props.getToken} getProfile={this.props.getProfile} waterPlant={this.waterPlant} removePlant={this.props.removePlant} setEditPlant={this.setEditPlant} plants={this.props.plants} isLoggedIn={this.props.isLoggedIn} user={this.props.user}/>}/ >
                     <Route path='/add' render={() => <NewPlant getToken={this.props.getToken} addPlant={this.props.addPlant} isLoggedIn={this.props.isLoggedIn} user={this.props.user} />} />
-                    <Route path='/login' render={() => <Login getToken={this.props.getToken} getProfile={this.props.getProfile} loginreload={this.reload}/>} />
+                    <Route path='/login' render={() => <Login isLoggedIn={this.props.isLoggedIn} login={this.props.login} getToken={this.props.getToken} getProfile={this.props.getProfile} loginreload={this.reload}/>} />
                     <Route path='/privacy' render={() => <Privacy />} />
                 </main>
             </div>

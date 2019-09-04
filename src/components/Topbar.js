@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Button } from 'semantic-ui-react'
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default class Topbar extends Component {
 

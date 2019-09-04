@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import { Card, Icon, Image, Button, Label } from 'semantic-ui-react'
 import placeholderImage from '../images/plant-clipart.png'
-import {Link} from 'react-router-dom'
 import EditPlantModal from '../components/EditPlantModal'
 import dogIcon from '../images/dog-icon.svg'
 import catIcon from '../images/cat-icon.svg'
