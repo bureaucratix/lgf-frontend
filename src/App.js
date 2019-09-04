@@ -107,13 +107,39 @@ daysUntilWater = (plant) =>{
 }
 
 
-  logout = () => {
-    localStorage.setItem('jwt', '')
-    this.setState({
-        username: '',
-        plants:[],
-        isLoggedIn: false
-    })
+logout = () => {
+  localStorage.setItem('jwt', '')
+  this.setState({
+      username: '',
+      plants:[],
+      isLoggedIn: false
+  })
+}
+
+login = (username, password) => {
+  fetch(`${API_ROOT}/login`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ user: { username, password } })
+  })
+      .then(res => res.json())
+      .then(json => {
+          console.log('login:', json)
+          if (json && json.jwt) {
+             
+              this.saveToken(json.jwt)
+              this.getProfile()
+              this.setState({isLoggedIn:true})
+          } else {
+              alert(json.message)
+          }
+      })
+}
+
+saveToken = (jwt) => {
+  localStorage.setItem('jwt', jwt)
 }
 
   // <Header as='h2' textAlign='center' content={this.state.currentPageHeader}/>
@@ -127,8 +153,8 @@ daysUntilWater = (plant) =>{
         <div className="ui green" id="custom-header">
           <Topbar isLoggedIn={this.state.isLoggedIn} getToken={this.getToken} logout={this.logout}/>
         </div>
-        <div id="amazon-root"></div>
-          <MainContainer getToken={this.getToken} addPlant={this.addPlant} daysUntilWater={this.daysUntilWater} removePlant={this.removePlant} getProfile={this.getProfile} user={this.state.user} isLoggedIn={this.state.isLoggedIn} plants={this.sortByDaysLeft(this.state.plants)} />
+        {/* <div id="amazon-root"></div> */}
+          <MainContainer login={this.login} getToken={this.getToken} addPlant={this.addPlant} daysUntilWater={this.daysUntilWater} removePlant={this.removePlant} getProfile={this.getProfile} user={this.state.user} isLoggedIn={this.state.isLoggedIn} plants={this.sortByDaysLeft(this.state.plants)} />
           </Router>
       </div>
    

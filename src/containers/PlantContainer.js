@@ -23,7 +23,7 @@ class PlantContainer extends Component {
 
     render(){
 
-        if(this.props.loggedIn === false){
+        if(this.props.isLoggedIn === false){
             return <Redirect to="/login" />}
        
         return (

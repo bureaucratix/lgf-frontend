@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { API_ROOT } from '../constants/index';
+import Alert from '../components/Alert.js';
 import { Button, Divider, Form, Grid, Segment } from 'semantic-ui-react'
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
@@ -11,10 +12,10 @@ class  Login extends Component {
     this.password = React.createRef()
 
     this.state = {
-      username: '',
-      name: '',
-      email: '',
-      password: '',
+        username: '',
+        name: '',
+        email: '',
+        password: '',
   }
 }
         
@@ -49,50 +50,39 @@ handleSignUp = (ev) => {
         .then(json => {
             if (json && json.jwt) {
                 console.log("after create json:",json)
-                document.getElementById("signupForm").reset();
+                this.props.login(username, password)
                 
             } else {
-                console.log("failed",json)
+                const errorsarray = ["Errors:"];
+                
+                const keys = Object.keys(json.error);
+                keys.forEach((key)=>{
+                    let substring = ""
+                    substring = substring + key.toString();
+                    substring = substring + " ";
+                    substring = substring + json.error[key];
+                    errorsarray.push(substring)
+                });
+                alert(errorsarray.join('\n'))
             }
         })
 }
 
-
-login = (ev) => {
+handleSubmit = (ev) => {
     ev.preventDefault()
     console.log(ev)
 
     let username = this.username.current.value
     let password = this.password.current.value
     console.log(username, password)
-    fetch(`${API_ROOT}/login`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ user: { username, password } })
-    })
-        .then(res => res.json())
-        .then(json => {
-            console.log('login:', json)
-            if (json && json.jwt) {
-               
-                this.saveToken(json.jwt)
-                this.props.getProfile()
-                this.setState({isLoggedIn:true})
-            } else {
-                alert(json.message)
-            }
-        })
+    this.props.login(username, password)
 }
 
 
-saveToken = (jwt) => {
-    localStorage.setItem('jwt', jwt)
-}
 
 render(){
-    if(this.state.isLoggedIn){
+    if(this.props.isLoggedIn){
+        
         return <Redirect to="/" />}
 
   return(
@@ -100,7 +90,7 @@ render(){
   <Segment placeholder> 
     <Grid columns={2} relaxed='very' stackable>
       <Grid.Column>
-        <form onSubmit={this.login}>
+        <form onSubmit={this.handleSubmit}>
                     <div className="ui form">
                         <div className="fields">
                             <div className="field">
@@ -131,7 +121,7 @@ render(){
                                 <Form.Input label='Username' placeholder='Username' name='username' value={this.state.username} onChange={this.handleChange} />
                             </div>
                             <div className="field">
-                            <Form.Input label='name' placeholder='Name' name='name' value={this.state.name} onChange={this.handleChange} />
+                            <Form.Input label='Name' placeholder='Name' name='name' value={this.state.name} onChange={this.handleChange} />
                             </div>
                     </Form.Group>
                     <Form.Group>
