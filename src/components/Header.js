@@ -29,7 +29,7 @@ render () {
             </Button>
             </Link>
         </div>
-        <Header textAlign="center" className="banner" as='h2' content={this.props.isLoggedIn ? `Hello, ${this.props.user.name}!` : 'Please log in!'}/>
+        <Header textAlign="center" className="banner" as='h2' content={this.props.isLoggedIn && this.props.user ? `Hello, ${this.props.user.name}!` : 'Please log in!'}/>
         </div>
     )
 }

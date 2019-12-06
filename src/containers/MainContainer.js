@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Loader } from 'semantic-ui-react'
 import { API_ROOT } from '../constants/index.js';
 import Login from '../components/Login.js'
+import Example from '../components/Example.js'
 import Privacy from '../components/Privacy.js'
 import PlantContainer from '../containers/PlantContainer.js'
 import NewPlant from '../components/NewPlant'
@@ -109,6 +110,7 @@ class MainContainer extends Component {
                     </div>
 
                     <Route exact path='/' render={() => <PlantContainer editPlantSubmit={this.editPlantSubmit} editPlantChange={this.editPlantChange} daysUntilWater={this.props.daysUntilWater} getToken={this.props.getToken} getProfile={this.props.getProfile} waterPlant={this.waterPlant} removePlant={this.props.removePlant} setEditPlant={this.setEditPlant} plants={this.props.plants} isLoggedIn={this.props.isLoggedIn} user={this.props.user}/>}/ >
+                    <Route exact path='/example' render={() => <Example editPlantSubmit={this.editPlantSubmit} editPlantChange={this.editPlantChange} daysUntilWater={this.props.daysUntilWater} getToken={this.props.getToken} getProfile={this.props.getProfile} waterPlant={this.waterPlant} removePlant={this.props.removePlant} setEditPlant={this.setEditPlant} plants={this.props.plants} isLoggedIn={this.props.isLoggedIn} user={this.props.user}/>}/ >
                     <Route path='/add' render={() => <NewPlant getToken={this.props.getToken} addPlant={this.props.addPlant} isLoggedIn={this.props.isLoggedIn} user={this.props.user} />} />
                     <Route path='/login' render={() => <Login isLoggedIn={this.props.isLoggedIn} login={this.props.login} getToken={this.props.getToken} getProfile={this.props.getProfile} loginreload={this.reload}/>} />
                     <Route path='/privacy' render={() => <Privacy />} />
